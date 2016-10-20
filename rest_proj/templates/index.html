@@ -2,6 +2,10 @@
 
 {% block content %}
 
-
+{% if request.user.is_authenticated %}
+  <p>
+    Welcome {{ request.user }}, <a href="{% url 'profile_update_view' %}">Update Profile</a>
+  </p>
+{%  endif %}
 
 {% endblock %}
