@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <form class="" action="" method="post">
+    <p>
+      You are about to delete the Food Item: {{ object }}. Are you Sure?
+    </p>
+    <input type="submit" value="Yes">
+    <a href="{% url 'index_view' %}">No, Go back.</a>
+    {% csrf_token %}
+  </form>
+
+{% endblock %}

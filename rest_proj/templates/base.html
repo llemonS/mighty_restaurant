@@ -26,11 +26,14 @@
           Welcome {{ request.user }}, <a href="{% url 'profile_update_view' %}">Update Profile</a>
         </p>
       {%  endif %}
+      {% if request.user.profile.is_owner %}
+        <a href="{% url 'food_create_view' %}">Create new Food Item</a>
+      {% endif %}
       <!-- Page Title -->
       <div style="height:50px"></div>
       <h1>Restaurant POS</h1>
       <div style="height:50px"></div>
-      
+
       {% block content %}
       {% endblock %}
     </div>

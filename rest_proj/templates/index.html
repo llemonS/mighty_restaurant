@@ -13,6 +13,11 @@
   <div class="">
   {% if request.user.profile.is_owner %}
     <a href="{% url 'food_update_view' item.id %}">Update</a>
+  {% if request.user.profile.is_owner %}
+        <form class="" action="{% url 'food_delete_view' item.id %}" method="get">
+          {% csrf_token %}
+          <input type="submit" value="X">
+  {% endif %}
   {% endif %}
   </div>
   <hr>
