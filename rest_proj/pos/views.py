@@ -22,3 +22,12 @@ class ProfileUpdateView(UpdateView):
 
     def get_object(self):
         return Profile.objects.get(user=self.request.user)
+
+class FoodUpdateView(UpdateView):
+    model = FoodItem
+    fields = ("title","description","price")
+    success_url = reverse_lazy('index_view')
+
+    def get_queryset(self):
+        if self.request.user.profile.is_owner:
+            return FoodItem.objects.all()

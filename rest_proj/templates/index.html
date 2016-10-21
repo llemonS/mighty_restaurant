@@ -10,7 +10,11 @@
     {{ item.description }}
     <h5>${{ item.price }}</h5>
   </blockquote>
-
+  <div class="">
+  {% if request.user.profile.is_owner %}
+    <a href="{% url 'food_update_view' item.id %}">Update</a>
+  {% endif %}
+  </div>
   <hr>
 {% endfor %}
 
