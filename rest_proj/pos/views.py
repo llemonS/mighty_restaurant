@@ -4,10 +4,11 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
-from pos.models import Profile
+from pos.models import Profile, FoodItem, Order
 
-class IndexView(TemplateView):
+class IndexView(ListView):
     template_name = "index.html"
+    model = FoodItem
 
 class UserCreateView(CreateView):
     model = User

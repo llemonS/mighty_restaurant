@@ -20,6 +20,13 @@
           <li role="presentation"><a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a></li>
         {% endif %}
       </ul>
+      <!-- User infor & profile link -->
+      {% if request.user.is_authenticated %}
+        <p>
+          Welcome {{ request.user }}, <a href="{% url 'profile_update_view' %}">Update Profile</a>
+        </p>
+      {%  endif %}
+      <!-- Page Title -->
       <div style="height:50px"></div>
       <h1>Restaurant POS</h1>
       <div style="height:50px"></div>

@@ -2,10 +2,16 @@
 
 {% block content %}
 
-{% if request.user.is_authenticated %}
-  <p>
-    Welcome {{ request.user }}, <a href="{% url 'profile_update_view' %}">Update Profile</a>
-  </p>
-{%  endif %}
+<h2>This Week's Menu!</h2>
+
+{% for item in object_list %}
+  <h3>{{ item.title }}</h3>
+  <blockquote cite="">
+    {{ item.description }}
+    <h5>${{ item.price }}</h5>
+  </blockquote>
+
+  <hr>
+{% endfor %}
 
 {% endblock %}

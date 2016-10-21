@@ -18,3 +18,19 @@ def create_profile(sender, **kwargs):
     created = kwargs["created"]
     if created:
         Profile.objects.create(user=instance)
+
+class FoodItem(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    price = models.FloatField()
+
+    def __str__(self):
+        return self.title
+
+class Order(models.Model):
+    created_by = models.ForeignKey('auth.user')
+    created_time = models.DateTimeField(auto_now_add=True)
+    notes = models.CharField(max_length=255)
+    is_completed = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
+    food_item = models.ManyToManyField(FoodItem)
