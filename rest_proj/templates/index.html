@@ -1,26 +1,34 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block header %}
 
-<h2>This Week's Menu!</h2>
+  <!-- If Owner, display create food item link -->
+  {% if request.user.profile.is_owner %}
+    <a href="{% url 'food_create_view' %}">Create new Food Item</a>
+  {% endif %}
+  {% if request.user.profile.is_server %}
+    <a href="{% url 'ticket_list_view' %}">Clock In</a>
+  {% endif %}
 
-{% for item in object_list %}
-  <h3>{{ item.title }}</h3>
-  <blockquote cite="">
-    {{ item.description }}
-    <h5>${{ item.price }}</h5>
-  </blockquote>
-  <div class="">
-  {% if request.user.profile.is_owner %}
-    <a href="{% url 'food_update_view' item.id %}">Update</a>
-  {% if request.user.profile.is_owner %}
-        <form class="" action="{% url 'food_delete_view' item.id %}" method="get">
-          {% csrf_token %}
-          <input type="submit" value="X">
-  {% endif %}
-  {% endif %}
-  </div>
-  <hr>
-{% endfor %}
+{% endblock %}
+
+{% block body %}
+
+  <h2>This Month's Menu!</h2>
+
+  <!-- Iterate over Food Items to show 'menu' -->
+  {% for item in object_list %}
+    <h3>{{ item.title }}</h3>
+    <blockquote cite="">
+      {{ item.description }}
+      <h5>${{ item.price }}</h5>
+    </blockquote>
+    <!-- If Owner, show update & delete links -->
+    {% if request.user.profile.is_owner %}
+      <a href="{% url 'food_update_view' item.id %}">Update</a>
+      <a href="{% url 'food_delete_view' item.id %}">Delete</a>
+    {% endif %}
+    <hr>
+  {% endfor %}
 
 {% endblock %}

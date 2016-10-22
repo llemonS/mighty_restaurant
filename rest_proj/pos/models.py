@@ -15,15 +15,19 @@ class Profile(models.Model):
     @property
     def is_owner(self):
         return self.access_level == 'o'
-        
+    @property
+    def is_server(self):
+        return self.access_level == 'c'
+    @property
+    def is_server(self):
+        return self.access_level == 's'
+
 @receiver(post_save, sender='auth.user')
 def create_profile(sender, **kwargs):
     instance = kwargs["instance"]
     created = kwargs["created"]
     if created:
         Profile.objects.create(user=instance)
-
-
 
 class FoodItem(models.Model):
     title = models.CharField(max_length=255)
@@ -33,10 +37,20 @@ class FoodItem(models.Model):
     def __str__(self):
         return self.title
 
-class Order(models.Model):
+class Ticket(models.Model):
     created_by = models.ForeignKey('auth.user')
     created_time = models.DateTimeField(auto_now_add=True)
-    notes = models.CharField(max_length=255)
+    is_placed = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
     is_paid = models.BooleanField(default=False)
-    food_item = models.ManyToManyField(FoodItem)
+
+    def __str__(self):
+        return str(self.id)
+
+class OrderItem(models.Model):
+    food_item = models.ForeignKey(FoodItem)
+    ticket = models.ForeignKey(Ticket)
+    notes = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return str(self.food_item)

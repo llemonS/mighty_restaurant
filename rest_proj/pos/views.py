@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
-from pos.models import Profile, FoodItem, Order
+from pos.models import Profile, FoodItem, OrderItem, Ticket
 
 class IndexView(ListView):
     template_name = "index.html"
@@ -28,8 +28,6 @@ class FoodCreateView(CreateView):
     success_url = reverse_lazy('index_view')
     fields = ("title","description","price")
 
-
-
 class FoodUpdateView(UpdateView):
     model = FoodItem
     fields = ("title","description","price")
@@ -46,4 +44,30 @@ class FoodDeleteView(DeleteView):
     def get_queryset(self):
         if self.request.user.profile.is_owner:
             return FoodItem.objects.all()
-        return []
+
+class ServerListView(ListView):
+    model = OrderItem
+    template_name = "server.html"
+
+# this is not being used @ the moment
+class OrderCreateView(CreateView):
+    model = OrderItem
+    success_url = reverse_lazy('server_list_view')
+    fields = ("food_item", "notes")
+
+class TicketCreateView(CreateView):
+    model = Ticket
+    success_url = reverse_lazy("ticket_list_view")
+    fields = ("id",)
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.created_by = self.request.user
+        return super().form_valid(form)
+
+class TicketListView(ListView):
+    model = Ticket
+    template_name = "server.html"
+
+class TicketDetailView(DetailView):
+    model = Ticket

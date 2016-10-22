@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>This is the server portal</h1>
+
+<!-- button creates a new ticket -->
+<form class="" action="{% url 'ticket_create_view' %}" method="post">
+  {% csrf_token %}
+  <input type="submit" name="" value="Create New Ticket">
+</form>
+<!-- Iterate over all tickets & link to detail page -->
+{% for ticket in object_list %}
+  <a href="{% url 'ticket_detail_view' ticket.id %}"><h2>Ticket # {{ ticket }}</h2></a>
+{% endfor %}
+
+{% endblock %}
