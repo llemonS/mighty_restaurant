@@ -50,7 +50,7 @@ class Ticket(models.Model):
 class OrderItem(models.Model):
     food_item = models.ForeignKey(FoodItem)
     ticket = models.ForeignKey(Ticket)
-    notes = models.CharField(max_length=255, null=True)
+    notes = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return str(self.food_item)

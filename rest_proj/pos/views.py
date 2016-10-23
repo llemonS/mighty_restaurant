@@ -49,7 +49,7 @@ class ServerListView(ListView):
     model = OrderItem
     template_name = "server.html"
 
-# this is not being used @ the moment
+
 class OrderCreateView(CreateView):
     model = OrderItem
     success_url = reverse_lazy('server_list_view')
@@ -71,3 +71,8 @@ class TicketListView(ListView):
 
 class TicketDetailView(DetailView):
     model = Ticket
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = OrderItem.objects.filter(ticket=self.kwargs['pk'])
+        return context
