@@ -3,6 +3,7 @@
 {% block header %}
   <!-- link to go back to server page -->
   <a href="{% url 'ticket_list_view' %}">Return to server portal</a>
+  <a href="{% url 'order_create_view' ticket.id %}">Add food item</a>
 {% endblock %}
 
 {% block body %}
@@ -10,9 +11,11 @@
   <h1>Ticket detail</h1>
 
 {% for item in object_list %}
-  <p>
-    {{ item }}
-  </p>
+  <h4>{{ item }}</h4>
+  <blockquote cite="">
+    {{ item.notes }}
+  </blockquote>
+  <hr>
 {% endfor %}
 
 

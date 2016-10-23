@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^food_item/(?P<pk>\d+)/update/$', FoodUpdateView.as_view(), name="food_update_view"),
     url(r'^food_item/(?P<pk>\d+)/delete/$', FoodDeleteView.as_view(), name="food_delete_view"),
     url(r'^server_portal/$', TicketListView.as_view(), name="ticket_list_view" ),
-    url(r'^create_order/$', OrderCreateView.as_view(), name="order_create_view"),
+    url(r'^create_order/(?P<pk>\d+)$', OrderCreateView.as_view(), name="order_create_view"),
     url(r'^create_ticket/$', TicketCreateView.as_view(), name="ticket_create_view"),
     url(r'^server_portal/(?P<pk>\d+)/$', TicketDetailView.as_view(), name="ticket_detail_view"),
 

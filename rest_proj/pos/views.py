@@ -52,8 +52,15 @@ class ServerListView(ListView):
 
 class OrderCreateView(CreateView):
     model = OrderItem
-    success_url = reverse_lazy('server_list_view')
     fields = ("food_item", "notes")
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.ticket = Ticket.objects.get(id=self.kwargs["pk"])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('ticket_detail_view', args=[int(self.kwargs["pk"])])
 
 class TicketCreateView(CreateView):
     model = Ticket
@@ -68,6 +75,11 @@ class TicketCreateView(CreateView):
 class TicketListView(ListView):
     model = Ticket
     template_name = "server.html"
+
+    def get_queryset(self):
+        var = super(TicketListView, self).get_queryset()
+        return var.filter(created_by=self.request.user)
+
 
 class TicketDetailView(DetailView):
     model = Ticket
