@@ -88,3 +88,34 @@ class TicketDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['object_list'] = OrderItem.objects.filter(ticket=self.kwargs['pk'])
         return context
+
+class TicketUpdateView(UpdateView):
+    model = Ticket
+    fields = ("is_placed","is_completed","is_paid")
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        if self.request.user.profile.is_server:
+            instance.is_placed = True
+        if self.request.user.profile.is_cook:
+            instance.is_placed = True
+            instance.is_completed = True
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        if self.request.user.profile.is_server:
+            return reverse('ticket_list_view', args=[int(self.kwargs["pk"])])
+        if self.request.user.profile.is_cook:
+            return reverse('cook_view')
+
+
+
+
+class CookListView(ListView):
+
+    model = Ticket
+    template_name = 'cook.html'
+
+    def get_queryset(self):
+        var = super(CookListView, self).get_queryset()
+        return var.filter(is_placed=True, is_completed=False)

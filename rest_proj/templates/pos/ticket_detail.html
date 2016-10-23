@@ -18,5 +18,9 @@
   <hr>
 {% endfor %}
 
+<form class="" action="{% url 'ticket_update_view' ticket.id %}" method="post">
+  {% csrf_token %}
+  <input type="submit" name="name" value="Submit Ticket">
+</form>
 
 {% endblock %}

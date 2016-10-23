@@ -9,6 +9,9 @@
   {% if request.user.profile.is_server %}
     <a href="{% url 'ticket_list_view' %}">Clock In</a>
   {% endif %}
+  {% if request.user.profile.is_cook %}
+    <a href="{% url 'cook_view'  %}">Clock in</a>
+  {% endif %}
 
 {% endblock %}
 

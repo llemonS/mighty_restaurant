@@ -16,7 +16,7 @@ class Profile(models.Model):
     def is_owner(self):
         return self.access_level == 'o'
     @property
-    def is_server(self):
+    def is_cook(self):
         return self.access_level == 'c'
     @property
     def is_server(self):
