@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models import Sum
 
 ACCESS_LEVELS = [
     ("s", "Server"),
@@ -47,6 +48,9 @@ class Ticket(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def total(self):
+        return OrderItem.objects.filter(ticket=self.id).aggregate(Sum('food_item__price'))
+
 class OrderItem(models.Model):
     food_item = models.ForeignKey(FoodItem)
     ticket = models.ForeignKey(Ticket)
@@ -54,3 +58,6 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return str(self.food_item)
+    @property
+    def price(self):
+        return FoodItem.objects.get(title=self.food_item).price

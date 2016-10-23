@@ -14,6 +14,7 @@
   <h4>{{ ticket.is_placed }}</h4>
   <h4>{{ ticket.is_completed }}</h4>
   <h4>{{ ticket.is_paid }}</h4>
+  <h5>{{ ticket.total }}</h5>
   <form class="" action="{% url 'ticket_paid' ticket.id %}" method="post">
     {% csrf_token %}
     <input type="submit" name="" value="Payment Recieved">
