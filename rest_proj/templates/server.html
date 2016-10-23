@@ -11,7 +11,13 @@
 <!-- Iterate over all tickets & link to detail page -->
 {% for ticket in object_list %}
   <a href="{% url 'ticket_detail_view' ticket.id %}"><h2>Ticket # {{ ticket }}</h2></a>
-  <h4>{{ticket.is_placed}}</h4>
+  <h4>{{ ticket.is_placed }}</h4>
+  <h4>{{ ticket.is_completed }}</h4>
+  <h4>{{ ticket.is_paid }}</h4>
+  <form class="" action="{% url 'ticket_paid' ticket.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" name="" value="Payment Recieved">
+  </form>
 {% endfor %}
 
 {% endblock %}

@@ -2,7 +2,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from pos.views import IndexView, UserCreateView, ProfileUpdateView, FoodCreateView, FoodUpdateView, \
                       FoodDeleteView, ServerListView, OrderCreateView, TicketCreateView, \
-                      TicketListView, TicketDetailView, TicketUpdateView, CookListView
+                      TicketListView, TicketDetailView, TicketUpdateView, CookListView, \
+                      TicketPaid
 
 
 urlpatterns = [
@@ -20,6 +21,7 @@ urlpatterns = [
     url(r'^server_portal/(?P<pk>\d+)/$', TicketDetailView.as_view(), name="ticket_detail_view"),
     url(r'^update_ticket/(?P<pk>\d+)/$', TicketUpdateView.as_view(), name="ticket_update_view"),
     url(r'^cook_portal/', CookListView.as_view(), name="cook_view" ),
+    url(r'^paid/(?P<pk>\d+)/$', TicketPaid.as_view(), name="ticket_paid")
 
 
 ]

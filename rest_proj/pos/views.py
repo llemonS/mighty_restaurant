@@ -78,8 +78,7 @@ class TicketListView(ListView):
 
     def get_queryset(self):
         var = super(TicketListView, self).get_queryset()
-        return var.filter(created_by=self.request.user)
-
+        return var.filter(created_by=self.request.user, is_paid=False)
 
 class TicketDetailView(DetailView):
     model = Ticket
@@ -104,18 +103,24 @@ class TicketUpdateView(UpdateView):
 
     def get_success_url(self):
         if self.request.user.profile.is_server:
-            return reverse('ticket_list_view', args=[int(self.kwargs["pk"])])
+            return reverse('ticket_list_view')
         if self.request.user.profile.is_cook:
             return reverse('cook_view')
 
-
-
-
 class CookListView(ListView):
-
     model = Ticket
     template_name = 'cook.html'
 
     def get_queryset(self):
         var = super(CookListView, self).get_queryset()
         return var.filter(is_placed=True, is_completed=False)
+
+class TicketPaid(UpdateView):
+    model = Ticket
+    fields = ("is_paid",)
+    success_url = reverse_lazy("ticket_list_view")
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.is_paid = True
+        return super().form_valid(form)

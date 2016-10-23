@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>This is the Cook portal</h1>
+<h1>All Tickets that need to be cooked:</h1>
 
 <!-- button creates a new ticket -->
 
 <!-- Iterate over all tickets & link to detail page -->
 {% for ticket in object_list %}
   <a href="{% url 'ticket_detail_view' ticket.id %}"><h2>Ticket # {{ ticket }}</h2></a>
-  <h4>{{ticket.is_placed}}</h4>
 {% endfor %}
 
 {% endblock %}
