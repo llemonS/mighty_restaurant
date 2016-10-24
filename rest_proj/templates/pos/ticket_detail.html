@@ -1,27 +1,40 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <!-- link to go back to server page -->
-  <a href="{% url 'ticket_list_view' %}">Return to server portal</a>
-  <a href="{% url 'order_create_view' ticket.id %}">Add food item</a>
-{% endblock %}
-
 {% block body %}
+<button class="btn btn-default btn-lg btn-warning" type="submit"><a href="{% url 'ticket_list_view' %}">Return to your Open Tickets</a></button>
 
-  <h1>Ticket detail</h1>
-
-{% for item in object_list %}
-  <h4>{{ item }}</h4>
-  <blockquote cite="">
-    {{ item.notes }}
-    {{ item.price }}
-  </blockquote>
-  <hr>
-{% endfor %}
-
-<form class="" action="{% url 'ticket_update_view' ticket.id %}" method="post">
-  {% csrf_token %}
-  <input type="submit" name="name" value="Submit Ticket">
-</form>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="col-md-4">Ticket detail</h3>
+    <div class="col-md-4">
+      <button class="btn btn-default btn-info" type="submit"><a href="{% url 'order_create_view' ticket.id %}">Add item to ticket</a></button>
+    </div>
+    <form class="" action="{% url 'ticket_update_view' ticket.id %}" method="post">
+      {% csrf_token %}
+      <input class="btn btn-success btn-md" type="submit" name="" value="Submit Ticket">
+    </form>
+  </div>
+  <div class="panel-body">
+    {% for item in object_list %}
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <div class="col-md-8">
+              <h1 class="panel-title">{{ item }}</h1>
+            </div>
+            <div class="col-md-4">
+              <text class="panel-title">${{ item.price }}</text>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+            {{ item.notes }}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
 {% endblock %}

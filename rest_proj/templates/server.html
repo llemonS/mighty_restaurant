@@ -14,13 +14,13 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <a class="col-md-4" href="{% url 'ticket_detail_view' ticket.id %}">
-        <div class="row">
+        <div class="panel-title">
           <h3>Ticket # {{ ticket }}</h3>
         </div>
       </a>
-      <p class="col-md-4">
-        {{ ticket.total }}
-      </p>
+      <h3 class="col-md-4">
+        Total ${{ ticket.total }}
+      </h3>
       <form class="" action="{% url 'ticket_paid' ticket.id %}" method="post">
         {% csrf_token %}
         <input class="btn btn-success btn-md" type="submit" name="" value="Payment Recieved">
@@ -30,7 +30,7 @@
       <div class="col-md-4">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Ticket in the Kitchen</h3>
+            <h3 class="panel-title">Ticket sent to Kitchen</h3>
           </div>
           <div class="panel-body">
             {{ ticket.is_placed }}
@@ -40,7 +40,7 @@
       <div class="col-md-4">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Food Ready to serve</h3>
+            <h3 class="panel-title">Food ready to serve</h3>
           </div>
           <div class="panel-body">
             {{ ticket.is_completed }}

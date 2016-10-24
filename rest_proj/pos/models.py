@@ -49,7 +49,7 @@ class Ticket(models.Model):
         return str(self.id)
 
     def total(self):
-        return OrderItem.objects.filter(ticket=self.id).aggregate(Sum('food_item__price'))
+        return OrderItem.objects.filter(ticket=self.id).aggregate(Sum('food_item__price')).get('food_item__price__sum')
 
 class OrderItem(models.Model):
     food_item = models.ForeignKey(FoodItem)
