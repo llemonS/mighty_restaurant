@@ -4,13 +4,19 @@
 
   <!-- If Owner, display create food item link -->
   {% if request.user.profile.is_owner %}
+  <button class="btn btn-success btn-lg" type="button" name="button">
     <a href="{% url 'food_create_view' %}">Create new Food Item</a>
+  </button>
   {% endif %}
   {% if request.user.profile.is_server %}
-    <a href="{% url 'ticket_list_view' %}">Clock In</a>
+    <button class="btn btn-success btn-lg" type="button" name="button">
+      <a href="{% url 'ticket_list_view' %}">Clock In</a>
+    </button>
   {% endif %}
   {% if request.user.profile.is_cook %}
-    <a href="{% url 'cook_view'  %}">Clock in</a>
+    <button class="btn btn-success btn-lg" type="button" name="button">
+      <a href="{% url 'cook_view'  %}">Clock in</a>
+    </button>
   {% endif %}
 
 {% endblock %}
@@ -20,12 +26,22 @@
   <h2>This Month's Menu!</h2>
 
   <!-- Iterate over Food Items to show 'menu' -->
+
   {% for item in object_list %}
-    <h3>{{ item.title }}</h3>
-    <blockquote cite="">
-      {{ item.description }}
-      <h5>${{ item.price }}</h5>
-    </blockquote>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="col-md-8">
+          <h3 class="panel-title">{{ item.title }}</h3>
+        </div>
+        <div class="col-md-4">
+          <h3>${{ item.price }}</h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        {{ item.description }}
+      </div>
+    </div>
+
     <!-- If Owner, show update & delete links -->
     {% if request.user.profile.is_owner %}
       <a href="{% url 'food_update_view' item.id %}">Update</a>

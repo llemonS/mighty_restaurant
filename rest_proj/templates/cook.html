@@ -7,7 +7,9 @@
 
 <!-- Iterate over all tickets & link to detail page -->
 {% for ticket in object_list %}
-  <a href="{% url 'ticket_detail_view' ticket.id %}"><h2>Ticket # {{ ticket }}</h2></a>
+  <button class="btn btn-default btn-info"type="button" name="button">
+     <a href="{% url 'ticket_detail_view' ticket.id %}"><h2>Ticket # {{ ticket }}</h2></a>
+  </button>
 {% endfor %}
 
 {% endblock %}
