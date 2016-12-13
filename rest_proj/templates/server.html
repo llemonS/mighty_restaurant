@@ -33,7 +33,7 @@
             <h3 class="panel-title">Ticket sent to Kitchen</h3>
           </div>
           <div class="panel-body">
-            {{ ticket.is_placed }}
+            {% if ticket.is_placed == True %}YES{% else %}NO{% endif %}
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@
             <h3 class="panel-title">Food ready to serve</h3>
           </div>
           <div class="panel-body">
-            {{ ticket.is_completed }}
+            {% if ticket.is_completed == True %}YES{% else %}NO{% endif %}
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
             <h3 class="panel-title">Ticket has been paid</h3>
           </div>
           <div class="panel-body">
-            {{ ticket.is_paid }}
+            {% if ticket.is_paid == True %}YES{% else %}NO{% endif %}
           </div>
         </div>
       </div>

@@ -14,26 +14,31 @@
       <input class="btn btn-success btn-md" type="submit" name="" value="Submit Ticket">
     </form>
   </div>
+
   <div class="panel-body">
+
     {% for item in object_list %}
-    <div class="col-md-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="panel-title">
-            <div class="col-md-8">
-              <h1 class="panel-title">{{ item }}</h1>
-            </div>
-            <div class="col-md-4">
-              <text class="panel-title">${{ item.price }}</text>
+
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-8">
+                <h1 class="panel-title">{{ item }}</h1>
+              </div>
+              <div class="col-md-4">
+                <h1 class="panel-title">${{ item.price }}</h1>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="panel-body">
-            {{ item.notes }}
+          <div class="panel-body">
+              {{ item.notes }}
+          </div>
         </div>
       </div>
-    </div>
+
     {% endfor %}
+
   </div>
 </div>
 
