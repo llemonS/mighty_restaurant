@@ -2,6 +2,8 @@
 
 {% block body %}
 <h1 class="text-center">Here are your Open Tickets:</h1>
+<!-- refresh page every 10 secs to see if a ticket is ready on Kitchen -->
+<meta http-equiv="refresh" content="10">
 
 <!-- button creates a new ticket -->
 <form class="" action="{% url 'ticket_create_view' %}" method="post">
@@ -23,12 +25,18 @@
       </h3>
       <form class="" action="{% url 'ticket_paid' ticket.id %}" method="post">
         {% csrf_token %}
-        <input class="btn btn-success btn-md" type="submit" name="" value="Payment Recieved">
+        <input class="btn btn-success btn-md" type="submit" name="" value="Payment Recieved" onclick="clicked(event)">
+        <!-- Confirm Payment cause sometimes you can accidentaly click on button-->
+        <script>
+        function clicked(e)
+        {if(!confirm('Are you Sure?'))e.preventDefault();}
+        </script>
       </form>
     </div>
     <div class="panel-body">
       <div class="col-md-4">
-        <div class="panel panel-primary">
+          <!-- Panel looks green if the ticket was sent to Kitchen -->
+          {% if ticket.is_placed == True %} <div class="panel panel-success"> {% else %} <div class="panel panel-primary"> {% endif %}
           <div class="panel-heading">
             <h3 class="panel-title">Ticket sent to Kitchen</h3>
           </div>
@@ -38,7 +46,8 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="panel panel-primary">
+          <!-- Panel looks green if food is ready to serve -->
+          {% if ticket.is_completed == True %} <div class="panel panel-success"> {% else %} <div class="panel panel-warning"> {% endif %}
           <div class="panel-heading">
             <h3 class="panel-title">Food ready to serve</h3>
           </div>
@@ -48,7 +57,8 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="panel panel-primary">
+         <!-- Panel looks red while ticket is not paid. -->
+          {% if ticket.is_paid == True %} <div class="panel panel-success"> {% else %} <div class="panel panel-danger"> {% endif %}
           <div class="panel-heading">
             <h3 class="panel-title">Ticket has been paid</h3>
           </div>
