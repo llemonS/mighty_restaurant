@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse, reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.models import User
 from pos.models import Profile, FoodItem, OrderItem, Ticket
 
