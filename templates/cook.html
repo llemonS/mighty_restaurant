@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Pedidos à serem Preparados:</h1>
+<meta http-equiv="refresh" content="10">
+
+<!-- button creates a new ticket -->
+
+<!-- Iterate over all tickets & link to detail page -->
+{% for ticket in object_list %}
+  <button class="btn btn-default btn-info"type="button" name="button">
+     <a href="{% url 'ticket_detail_view' ticket.id %}"><h2>Pedido nº: {{ ticket }}</h2></a>
+  </button>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+  <!-- If Owner, display create food item link -->
+  {% if request.user.profile.is_owner %}
+  <button class="btn btn-success btn-lg" type="button" name="button">
+    <a href="{% url 'food_create_view' %}">Cadastrar Itens</a>
+  </button>
+  {% endif %}
+  {% if request.user.profile.is_server %}
+    <button class="btn btn-success btn-lg" type="button" name="button">
+      <a href="{% url 'ticket_list_view' %}">Realizar Pedidos</a>
+    </button>
+  {% endif %}
+  {% if request.user.profile.is_cook %}
+    <button class="btn btn-success btn-lg" type="button" name="button">
+      <a href="{% url 'cook_view'  %}">Ver Pedidos</a>
+    </button>
+  {% endif %}
+
+{% endblock %}
+
+{% block body %}
+
+  <h2>Itens Recentes!</h2>
+
+  <!-- Iterate over Food Items to show 'menu' -->
+
+  {% for item in object_list %}
+
+    <div class="row">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ item.titulo }}</h3>
+        </div>
+        <div class="panel-body">
+        <div class="col-md-4">
+          <h3>R$ {{ item.preço }}</h3>
+        </div>
+          {{ item.descrição }}
+        </div>
+      </div>
+    </div>
+
+    <!-- If Owner, show update & delete links -->
+    {% if request.user.profile.is_owner %}
+      <a href="{% url 'food_update_view' item.id %}">Atualizar</a>
+      <a href="{% url 'food_delete_view' item.id %}">Deletar</a>
+    {% endif %}
+
+    <hr>
+
+  {% endfor %}
+
+{% endblock %}

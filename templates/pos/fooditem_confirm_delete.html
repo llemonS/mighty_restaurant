@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+  <form class="" action="" method="post">
+    <p>
+      Tem certeza que quer deletar o Item : {{ object }}.
+    </p>
+    <input type="submit" value="Sim">
+    <a href="{% url 'index_view' %}">Não, Voltar.</a>
+    {% csrf_token %}
+  </form>
+
+{% endblock %}

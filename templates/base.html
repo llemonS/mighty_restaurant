@@ -1,0 +1,53 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Lanchonete{% endblock %}</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="utf-8">
+    <title>Restaurante App</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <!-- nav bar -->
+      <ul class="nav nav-pills">
+        <li role="presentation"><a href="{% url 'index_view' %}">Home</a></li>
+        {% if not request.user.is_authenticated %}
+          <li role="presentation"><a href="{% url 'user_create_view' %}">Criar Usuário</a></li>
+          <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
+        {% else %}
+          <li role="presentation"><a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a></li>
+        {% endif %}
+      </ul>
+      <!-- User name & profile link -->
+      {% if request.user.is_authenticated %}
+        <p>
+          Seja Bem Vindo!  {{ request.user }}, <a href="{% url 'profile_update_view' %}">Atualizar Perfil</a>
+        </p>
+      {%  endif %}
+      <!-- Header block -->
+      {% block header %}
+      {% endblock %}
+      <!-- Page Title -->
+      <div class="panel panel-info">
+        <div class="panel-body">
+          <h1 class="text-center">Lanchonete Web </h1>
+        </div>
+      </div>
+      <!-- Body block -->
+      {% block body %}
+      {% endblock %}
+    </div>
+
+  </body>
+</html>

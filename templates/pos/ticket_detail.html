@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<button class="btn btn-default btn-lg btn-warning" type="submit"><a href="{% url 'ticket_list_view' %}">Retornar aos Pedidos em Aberto</a></button>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h style="float: left;">Detalhes do Pedido nº {{ticket}}</h>
+    <div class="col-md-4">
+     <button class="btn btn-default btn-info" type="submit">
+     <a class="inthemiddle" href="{% url 'order_create_view' ticket.id %}">Adicionar Itens ao Pedido</a>
+     </button>
+    </div>
+    <form class="" action="{% url 'ticket_update_view' ticket.id %}" method="post">
+      {% csrf_token %}
+      Mesa: <input type="number" min="0" max="99" step="1" value="">
+      <input class="btn btn-success" style="float: right;" type="submit" name="" value="Confirmar!">
+    </form>
+  </div>
+
+  <div class="panel-body">
+
+    {% for item in object_list %}
+
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-8">
+                <h1 class="panel-title">{{item}}</h1>
+              </div>
+              <div class="col-md-4">
+                <h1 class="panel-title">R${{ item.preço }}</h1>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+              {{ item.dados }}
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+  </div>
+</div>
+
+{% endblock %}

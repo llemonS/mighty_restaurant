@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="text-center">Pedidos em Aberto:</h1>
+<!-- refresh page every 10 secs -->
+<meta http-equiv="refresh" content="10">
+
+<!-- button creates a new ticket -->
+<form class="" action="{% url 'ticket_create_view' %}" method="post">
+  {% csrf_token %}
+  <input class="btn btn-primary btn-lg" type="submit" name="" value="Criar Novo Pedido">
+</form>
+<!-- Iterate over all tickets & link to detail page -->
+{% for ticket in object_list %}
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a class="col-md-4" href="{% url 'ticket_detail_view' ticket.id %}">
+        <div class="panel-title">
+          <h3>Pedido nº: {{ ticket }}</h3>
+        </div>
+      </a>
+      <h3 class="col-md-4">
+        Total R$ {{ ticket.total }}
+      </h3>
+      <form class="" action="{% url 'ticket_paid' ticket.id %}" method="post">
+        {% csrf_token %}
+        <input class="btn btn-success btn-md" type="submit" name="" value="Confirmar Pagamento!" onclick="clicked(event)">
+        <!-- Confirmar Pagamento-->
+        <script>
+        function clicked(e)
+        {if(!confirm('Tem Certeza?'))e.preventDefault();}
+        </script>
+      </form>
+    </div>
+    <div class="panel-body">
+      <div class="col-md-4">
+      <!-- Ficar amarelo se o pedido foi enviado a cozinha -->
+      {% if ticket.is_placed == True %} <div class="panel panel-success"> {% else %} <div class="panel panel-primary"> {% endif %}
+          <div class="panel-heading">
+            <h3 class="panel-title">Pedido Enviado à Cozinha</h3>
+          </div>
+          <div class="panel-body">
+            {% if ticket.is_placed == True %}Sim{% else %}Não{% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <!-- Ficar verde se o pedido foi preparado -->
+      {% if ticket.is_completed == True %} <div class="panel panel-success"> {% else %} <div class="panel panel-warning"> {% endif %}
+          <div class="panel-heading">
+            <h3 class="panel-title">Pedido Preparado</h3>
+          </div>
+          <div class="panel-body">
+            {% if ticket.is_completed == True %}Sim{% else %}Não{% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <!-- Ficar vermelho se o pedido não foi pago -->
+      {% if ticket.is_paid == True %} <div class="panel panel-success"> {% else %} <div class="panel panel-danger"> {% endif %}
+          <div class="panel-heading">
+            <h3 class="panel-title">Pedido Pago</h3>
+          </div>
+          <div class="panel-body">
+            {% if ticket.is_paid == True %}Sim{% else %}Não{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+{% endblock %}
